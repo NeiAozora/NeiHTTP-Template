@@ -1,0 +1,23 @@
+<?php
+require "vendor/autoload.php";
+require "helpers/functions.php";
+
+
+use App\Http\HttpServer;
+use App\Provider\ReactHttpServerProvider;
+use App\Exception\ZanExceptionHandler;
+use React\EventLoop\Loop;
+
+use function Helpers\createDirIfNotExist;
+
+set_exception_handler([ZanExceptionHandler::class, "handle"]);
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
+
+$loop = Loop::get();
+
+$httpServer = new HttpServer();
+$httpServer->setHttpServerProvider(new ReactHttpServerProvider($loop));
+$httpServer->setRouterFromFile('route/web.php');
+$httpServer->run('127.0.0.1:8080');
