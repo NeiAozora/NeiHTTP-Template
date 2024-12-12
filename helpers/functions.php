@@ -31,6 +31,7 @@ function view($viewLocation, $data = [])
     // Replace dots with slashes and append '.php' extension
     $viewLocation = str_replace('.', '/', $viewLocation) . '.php';
 
+    $viewLocation = "view/" . $viewLocation;
     // Extract the data array to individual variables
     extract($data);
 
